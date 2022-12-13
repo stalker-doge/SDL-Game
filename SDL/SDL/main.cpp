@@ -12,20 +12,33 @@ int main(int argc, char* argv[])
 	
 	MainMenu* Mmenu = MainMenu::Instance();
 
-	bool RunGame = false;
+	bool loadGame = false;
+
 
 	while (Mmenu->IsGameRunning()) 
 	{
-		RunGame = true;
+		Mmenu->Render();
+		Mmenu->Update();
+
+		loadGame = true;
+		
+		Mmenu->Uninitialise();
 	}
 
-	if (RunGame == true) 
+	if (loadGame == true)
 	{
+		Mmenu->Uninitialise();
 		while (game->IsGameRunning())
 		{
 			game->Render();
 			game->Update();
 		}
+	}
+	Mmenu->Uninitialise();
+	while (game->IsGameRunning())
+	{
+		game->Render();
+		game->Update();
 	}
 
 	return 0;

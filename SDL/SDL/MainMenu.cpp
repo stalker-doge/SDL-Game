@@ -21,6 +21,17 @@ MainMenu::~MainMenu()
 
 void MainMenu::Update()
 {
+    inputManager->Update();
+
+    if (inputManager->GetKeyDown(SDLK_ESCAPE))
+    {
+        Uninitialise();
+    }
+
+    if (inputManager->GetKeyDown(SDLK_j)) 
+    {
+        RunGame = true;
+    }
 }
 
 void MainMenu::Render()
@@ -35,11 +46,13 @@ void MainMenu::Render()
 
 bool MainMenu::IsGameRunning()
 {
-	return true;
+    return RunGame;
 }
 
 void MainMenu::Initialise()
 {
+    inputManager = InputManager::Instance();
+
     SDL_Init(SDL_INIT_EVERYTHING);
     gameWindow = SDL_CreateWindow("Main Menu", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_OPENGL);
     gameRender = SDL_CreateRenderer(gameWindow, -1, SDL_RENDERER_ACCELERATED);
@@ -49,10 +62,11 @@ void MainMenu::Initialise()
 
 void MainMenu::Uninitialise()
 {
-    SDL_Quit();
+    RunGame = false;
+    delete inputManager;
+    delete m_visualisation;
     SDL_DestroyRenderer(gameRender);
     SDL_DestroyWindow(gameWindow);
-    inputManager->~InputManager();
-    m_visualisation->~Visualisation();
+    SDL_Quit();
 }
 MainMenu* MainMenu::s_instance = nullptr;
