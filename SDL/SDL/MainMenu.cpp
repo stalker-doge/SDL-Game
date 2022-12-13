@@ -1,5 +1,19 @@
 #include "MainMenu.h"
 
+MainMenu* MainMenu::Instance()
+{
+    if (s_instance == nullptr)
+    {
+        s_instance = new MainMenu();
+        return s_instance;
+    }
+    return s_instance;
+}
+
+MainMenu::~MainMenu()
+{
+}
+
 void MainMenu::Update()
 {
 }
