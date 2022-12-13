@@ -35,7 +35,7 @@ void MainMenu::Render()
 
 bool MainMenu::IsGameRunning()
 {
-	return false;
+	return true;
 }
 
 void MainMenu::Initialise()
