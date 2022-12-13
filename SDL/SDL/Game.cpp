@@ -22,38 +22,37 @@ Game::~Game()
 
 void Game::Update()
 {
-    Uint64 startTimer = SDL_GetPerformanceCounter();
-    inputManager->Update();
+    if (IsGameRunning())
+    {
+        Uint64 startTimer = SDL_GetPerformanceCounter();
+        inputManager->Update();
 
-    if (inputManager->GetKeyDown(SDLK_ESCAPE))
-    {
-        StopGame();
+        if (inputManager->GetKeyDown(SDLK_ESCAPE))
+        {
+            StopGame();
+        }
+        else if (inputManager->GetKeyDown(SDLK_KP_ENTER))
+        {
+            RestartGame();
+        }
+        m_player->Update();
+        m_enemy->Update();
+        CheckCollisions();
+        Render();
+        Uint64 endTimer = SDL_GetPerformanceCounter();
+        float elapsedMS = (endTimer - startTimer) / (float)SDL_GetPerformanceFrequency() * 1000;//capping the game at 60fps
+        SDL_Delay(floor(16.666f - elapsedMS));
     }
-    else if (inputManager->GetKeyDown(SDLK_KP_ENTER))
-    {
-        RestartGame();
-    }
-    m_player->Update();
-    m_enemy->Update();
-    CheckCollisions();
-    Render();
-	Uint64 endTimer = SDL_GetPerformanceCounter();
-	float elapsedMS = (endTimer - startTimer) / (float)SDL_GetPerformanceFrequency() * 1000;//capping the game at 60fps
-	SDL_Delay(floor(16.666f - elapsedMS));
 }
 
 void Game::Render()
 {
-    if (IsGameRunning())
-    {
         SDL_RenderClear(gameRender);
 		for (int i = 0; i < m_entities.size(); i++)
 		{
 			m_entities[i]->Render();
 		}
         SDL_RenderPresent(gameRender);
-
-    }
 }
 
 bool Game::IsGameRunning()
@@ -107,15 +106,21 @@ void Game::Initialise()
 
 void Game::Uninitialise()
 {
-   
-    SDL_DestroyRenderer(gameRender);
-    SDL_DestroyWindow(gameWindow);
+    delete m_player;
+    delete m_enemy;
+	for (int i=0;i<3;i++)
+	{
+		delete m_block[i];
+	}
+    for (int i = 0; i < 5; i++)
+	{
+		delete m_spikeBlocks[i];
+	}
     delete inputManager;
     delete m_visualisation;
-	for (int i = 0; i < m_entities.size(); i++)
-	{
-		delete m_entities[i];
-	}
+    m_entities.clear();
+    SDL_DestroyRenderer(gameRender);
+    SDL_DestroyWindow(gameWindow);
     SDL_Quit();
 }
 void Game::StopGame()
