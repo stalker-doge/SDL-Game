@@ -1,5 +1,10 @@
 #include "MainMenu.h"
 
+MainMenu::MainMenu() 
+{
+    Initialise();
+}
+
 MainMenu* MainMenu::Instance()
 {
     if (s_instance == nullptr)
@@ -50,3 +55,4 @@ void MainMenu::Uninitialise()
     inputManager->~InputManager();
     m_visualisation->~Visualisation();
 }
+MainMenu* MainMenu::s_instance = nullptr;

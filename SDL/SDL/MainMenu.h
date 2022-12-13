@@ -25,6 +25,6 @@ private:
 	InputManager* inputManager;
 	Visualisation* m_visualisation;
 
-
+	//bool RunGame = false;
 };
 
