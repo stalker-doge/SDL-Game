@@ -17,10 +17,12 @@ Game* Game::Instance()
 
 Game::~Game()
 {
+	
 }
 
 void Game::Update()
 {
+    Uint64 startTimer = SDL_GetPerformanceCounter();
     inputManager->Update();
 
     if (inputManager->GetKeyDown(SDLK_ESCAPE))
@@ -32,7 +34,12 @@ void Game::Update()
         RestartGame();
     }
     m_player->Update();
+    m_enemy->Update();
     CheckCollisions();
+    Render();
+	Uint64 endTimer = SDL_GetPerformanceCounter();
+	float elapsedMS = (endTimer - startTimer) / (float)SDL_GetPerformanceFrequency() * 1000;//capping the game at 60fps
+	SDL_Delay(floor(16.666f - elapsedMS));
 }
 
 void Game::Render()
@@ -40,17 +47,12 @@ void Game::Render()
     if (IsGameRunning())
     {
         SDL_RenderClear(gameRender);
-        m_block[0]->Render();
-        m_block[1]->Render();
-        m_block[2]->Render();
-        for (int i = 0; i < 5; i++)
-        {
-           m_spikeBlocks[i]->Render();
-        }
-        m_player->Render();
-        m_star->Render();
+		for (int i = 0; i < m_entities.size(); i++)
+		{
+			m_entities[i]->Render();
+		}
         SDL_RenderPresent(gameRender);
-        SDL_Delay(1000 / 60);
+
     }
 }
 
@@ -72,6 +74,7 @@ void Game::Initialise()
     }
     m_player = new Player();
     m_star = new Entity();
+	m_enemy = new Enemy();
     rgb[0] = 76;
     rgb[1] = 183;
     rgb[2] = 245;
@@ -89,6 +92,7 @@ void Game::Initialise()
         m_spikeBlocks[i]->Initialise("spike", "spike.bmp");
     }
     m_star->Initialise("star", "star.bmp");
+	m_enemy->Initialise();
     m_entities.push_back(m_player);
 	m_entities.push_back(m_block[0]);
 	m_entities.push_back(m_block[1]);
@@ -98,16 +102,21 @@ void Game::Initialise()
 		m_entities.push_back(m_spikeBlocks[i]);
 	}
     m_entities.push_back(m_star);
-	
+	m_entities.push_back(m_enemy);
 }
 
 void Game::Uninitialise()
 {
-    SDL_Quit();
+   
     SDL_DestroyRenderer(gameRender);
     SDL_DestroyWindow(gameWindow);
-    inputManager->~InputManager();
-    m_visualisation->~Visualisation();
+    delete inputManager;
+    delete m_visualisation;
+	for (int i = 0; i < m_entities.size(); i++)
+	{
+		delete m_entities[i];
+	}
+    SDL_Quit();
 }
 void Game::StopGame()
 {

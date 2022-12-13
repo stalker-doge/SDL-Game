@@ -10,7 +10,6 @@ int main(int argc, char* argv[])
 
 	while (game->IsGameRunning())
 	{
-		game->Render();
 		game->Update();
 	}
 	return 0;

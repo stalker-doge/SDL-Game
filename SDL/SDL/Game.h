@@ -4,6 +4,7 @@
 #include "Visualisation.h"
 #include "Player.h"
 #include <vector>
+#include "Enemy.h"
 class Game
 {
 public:
@@ -32,6 +33,7 @@ private:
 	Entity* m_block[3];
 	Entity* m_spikeBlocks[5];
 	Entity* m_star;
+	Enemy* m_enemy;
 	std::vector<Entity*> m_entities;
 };
 
