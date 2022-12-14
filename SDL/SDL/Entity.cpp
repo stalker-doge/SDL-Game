@@ -23,6 +23,7 @@ void Entity::Initialise(const char* name, const char* imageName)
     m_Rect = new SDL_Rect{ rand() % 1280,rand() % 720,64,64 };
     isEnabled = true;
 	isDynamic = false;
+    lifetime = 0;
 }
 
 void Entity::Render()
@@ -36,6 +37,7 @@ void Entity::Render()
 
 void Entity::SetStatus(bool enabling)
 {
+    lifetime = maxlifetime;
     isEnabled = enabling;
 }
 
@@ -51,6 +53,15 @@ bool Entity::GetDyanmic()
 
 void Entity::Update()
 {
+}
+
+void Entity::GenericAction()
+{
+}
+
+int Entity::GetLifetime()
+{
+    return lifetime;
 }
 
 void Entity::OnCollision(Entity* collider)

@@ -10,6 +10,7 @@ public:
 	void Initialise();
 	void Update();
 	void OnCollision(Entity* collider) override;
+	void Shoot(SDL_Rect* location);
 private:
 	int imageID;
 	int bulletX, bulletY;

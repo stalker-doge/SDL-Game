@@ -46,6 +46,15 @@ void Player::Update()
     {
 		m_Rect->x += playerSpeed;
     }
+
+    if (m_Rect->y > 720||m_Rect->y<0)
+    {
+        m_Rect->y = playerY;
+    }
+    if (m_Rect->x > 1280 || m_Rect->x < 0)
+    {
+        m_Rect->x = playerX;
+    }
 }
 
 void Player::OnCollision(Entity*collider)

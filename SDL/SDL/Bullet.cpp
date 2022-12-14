@@ -17,17 +17,32 @@ void Bullet::Initialise()
 {
 	m_Vis = Visualisation::Instance();
 	imageID = m_Vis->AddImage("bullet.bmp");
-	Entity::isEnabled = true;
+	Entity::isEnabled = false;
 	Entity::isDynamic = true;
 	Entity::imageID = imageID;
-	bulletSpeed = 1;
+	bulletSpeed = 10;
+	lifetime = 60;
+	maxlifetime = 60;
+	m_Rect = new SDL_Rect{ 0,0,64,64 };
 }
 
 void Bullet::Update()
 {
-	m_Rect->x += bulletSpeed;
+	if (isEnabled)
+	{
+		m_Rect->x += bulletSpeed;
+		lifetime--;
+	}
+
 }
 
 void Bullet::OnCollision(Entity* collider)
 {
+}
+
+void Bullet::Shoot(SDL_Rect* location)
+{
+	Entity::isEnabled = true;
+	m_Rect->x = location->x;
+	m_Rect->y = location->y;
 }

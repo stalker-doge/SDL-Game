@@ -24,23 +24,33 @@ void Game::Update()
 {
     if (IsGameRunning())
     {
-        Uint64 startTimer = SDL_GetPerformanceCounter();
+       
         inputManager->Update();
 
         if (inputManager->GetKeyDown(SDLK_ESCAPE))
         {
             StopGame();
+            return;
         }
         else if (inputManager->GetKeyDown(SDLK_KP_ENTER))
         {
             RestartGame();
+            return;
         }
+        if (inputManager->GetKeyDown(SDLK_SPACE))
+        {
+            m_bulletPool->GetObject()->Shoot(m_player->GetLocation());
+        }
+
+        Uint64 startTimer = SDL_GetPerformanceCounter();
         m_player->Update();
         m_enemy->Update();
+        m_bulletPool->Update();
         CheckCollisions();
         Render();
         Uint64 endTimer = SDL_GetPerformanceCounter();
         float elapsedMS = (endTimer - startTimer) / (float)SDL_GetPerformanceFrequency() * 1000;//capping the game at 60fps
+        elapsedMS = SDL_max(elapsedMS, 0.01);
         SDL_Delay(floor(16.666f - elapsedMS));
     }
 }
@@ -74,6 +84,8 @@ void Game::Initialise()
     m_player = new Player();
     m_star = new Entity();
 	m_enemy = new Enemy();
+    m_bullet = new Bullet();
+    m_bulletPool = new ObjectPool();
     rgb[0] = 76;
     rgb[1] = 183;
     rgb[2] = 245;
@@ -92,6 +104,7 @@ void Game::Initialise()
     }
     m_star->Initialise("star", "star.bmp");
 	m_enemy->Initialise();
+    m_bullet->Initialise();
     m_entities.push_back(m_player);
 	m_entities.push_back(m_block[0]);
 	m_entities.push_back(m_block[1]);
@@ -102,6 +115,8 @@ void Game::Initialise()
 	}
     m_entities.push_back(m_star);
 	m_entities.push_back(m_enemy);
+    m_entities.push_back(m_bullet);
+    m_bulletPool->Initialise(m_bullet);
 }
 
 void Game::Uninitialise()

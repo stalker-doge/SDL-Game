@@ -5,6 +5,8 @@
 #include "Player.h"
 #include <vector>
 #include "Enemy.h"
+#include "Bullet.h"
+#include "ObjectPool.h"
 class Game
 {
 public:
@@ -34,6 +36,8 @@ private:
 	Entity* m_spikeBlocks[5];
 	Entity* m_star;
 	Enemy* m_enemy;
+	Bullet* m_bullet;
 	std::vector<Entity*> m_entities;
+	ObjectPool* m_bulletPool;
 };
 
