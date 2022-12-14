@@ -52,7 +52,9 @@ bool MainMenu::IsGameRunning()
 void MainMenu::Initialise()
 {
     inputManager = InputManager::Instance();
-
+    rgb[0] = 76;
+    rgb[1] = 183;
+    rgb[2] = 245;
     SDL_Init(SDL_INIT_EVERYTHING);
     gameWindow = SDL_CreateWindow("Main Menu", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_OPENGL);
     gameRender = SDL_CreateRenderer(gameWindow, -1, SDL_RENDERER_ACCELERATED);

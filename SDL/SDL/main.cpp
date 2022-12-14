@@ -17,24 +17,23 @@ int main(int argc, char* argv[])
 
 	while (Mmenu->IsGameRunning()) 
 	{
+		if (loadGame == true)
+		{
+			//Mmenu->Uninitialise();
+			break;
+			//return 0;
+		}
+
 		Mmenu->Render();
 		Mmenu->Update();
 
 		loadGame = true;
-		
-		Mmenu->Uninitialise();
+		//Mmenu->Uninitialise();
 	}
 
-	if (loadGame == true)
-	{
-		Mmenu->Uninitialise();
-		while (game->IsGameRunning())
-		{
-			game->Render();
-			game->Update();
-		}
-	}
+
 	Mmenu->Uninitialise();
+
 	while (game->IsGameRunning())
 	{
 		game->Render();
