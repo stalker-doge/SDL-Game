@@ -47,11 +47,11 @@ void Player::Update()
 		m_Rect->x += playerSpeed;
     }
 
-    if (m_Rect->y > 720||m_Rect->y<0)
+    if (m_Rect->y+m_Rect->h > 720||m_Rect->y<0)
     {
         m_Rect->y = playerY;
     }
-    if (m_Rect->x > 1280 || m_Rect->x < 0)
+    if (m_Rect->x+m_Rect->w > 1280 || m_Rect->x < 0)
     {
         m_Rect->x = playerX;
     }
