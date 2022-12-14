@@ -14,8 +14,10 @@ public:
 	bool GetStatus();
 	bool GetDyanmic();
 	void Update();
+	void SetLifetime(float lf);
+	float GetMaxLifetime();
 	virtual void GenericAction();
-	int GetLifetime();
+	float GetLifetime();
 	virtual void OnCollision(Entity* collider);
 	SDL_Rect* GetLocation();
 protected:
@@ -26,7 +28,7 @@ protected:
 	SDL_Rect* m_Rect;
 	bool isEnabled;
 	bool isDynamic;
-	int lifetime;
-	int maxlifetime;
+	float lifetime;
+	float maxlifetime;
 };
 

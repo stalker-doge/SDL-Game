@@ -37,9 +37,9 @@ void Game::Update()
             RestartGame();
             return;
         }
-        if (inputManager->GetKeyDown(SDLK_SPACE))
+        if (inputManager->GetKeyHeld(SDLK_SPACE))//shooting function
         {
-            m_bulletPool->GetObject()->Shoot(m_player->GetLocation());
+            m_bulletPool->Shoot(m_player->GetLocation());
         }
 
         Uint64 startTimer = SDL_GetPerformanceCounter();
@@ -62,6 +62,7 @@ void Game::Render()
 		{
 			m_entities[i]->Render();
 		}
+        m_bulletPool->Render();
         SDL_RenderPresent(gameRender);
 }
 
@@ -116,7 +117,7 @@ void Game::Initialise()
     m_entities.push_back(m_star);
 	m_entities.push_back(m_enemy);
     m_entities.push_back(m_bullet);
-    m_bulletPool->Initialise(m_bullet);
+    m_bulletPool->Initialise(100);
 }
 
 void Game::Uninitialise()

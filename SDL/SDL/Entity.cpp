@@ -55,11 +55,22 @@ void Entity::Update()
 {
 }
 
+void Entity::SetLifetime(float lf)
+{
+	maxlifetime = lf;
+	lifetime = lf;
+}
+
+float Entity::GetMaxLifetime()
+{
+    return maxlifetime;
+}
+
 void Entity::GenericAction()
 {
 }
 
-int Entity::GetLifetime()
+float Entity::GetLifetime()
 {
     return lifetime;
 }

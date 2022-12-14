@@ -16,7 +16,7 @@ void Player::Initialise()
 {
     m_Vis = Visualisation::Instance();
     m_name="player";
-    playerSpeed = 1;
+    playerSpeed = 3;
     imageID = m_Vis->AddImage("testimage.bmp");
     Entity::isEnabled = true;
     Entity::isDynamic = true;
