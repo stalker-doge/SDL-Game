@@ -28,9 +28,9 @@ void MainMenu::Update()
         Uninitialise();
     }
 
-    if (inputManager->GetKeyDown(SDLK_j)) 
+    if (inputManager->GetKeyDown(SDL_MOUSEBUTTONDOWN)) 
     {
-        RunGame = true;
+        RunGame = false;
     }
 }
 

@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include "InputManager.h"
 #include "Visualisation.h"
+#include "Entity.h"
 
 class MainMenu
 {
@@ -24,6 +25,8 @@ private:
 	int rgb[3];
 	InputManager* inputManager;
 	Visualisation* m_visualisation;
+
+	Entity* Button;
 
 	bool RunGame = true;
 };
