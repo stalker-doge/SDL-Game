@@ -77,7 +77,11 @@ float Entity::GetLifetime()
 
 void Entity::OnCollision(Entity* collider)
 {
-
+    if (collider->GetName() == "bullet")
+    {
+    collider->SetStatus(false);
+    this->SetStatus(false);
+    }
 }
 
 SDL_Rect* Entity::GetLocation()

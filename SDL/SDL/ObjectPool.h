@@ -14,6 +14,7 @@ public:
 	void Initialise(int max_size);
 	void Shoot(SDL_Rect* location);
 	void Render();
+	std::vector<Bullet*> GetUsedVector();
 private:
 	int max_size;
 	std::vector<Bullet*> m_Pool;

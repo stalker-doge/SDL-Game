@@ -88,3 +88,8 @@ void ObjectPool::Render()
 		m_inUse[i]->Render();
 	}
 }
+
+std::vector<Bullet*> ObjectPool::GetUsedVector()
+{
+	return m_inUse;
+}

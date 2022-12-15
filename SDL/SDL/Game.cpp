@@ -172,6 +172,25 @@ Entity* Game::CheckCollisions()
                 }
             }
 		}
+		std::vector<Bullet*> temp = m_bulletPool->GetUsedVector();
+        for (int i = 0; i < m_entities.size(); i++)
+        {
+            if (m_entities[i]->GetStatus())
+            {
+                if (m_entities[i]->GetName() != "player")
+                {
+                    for (int j = 0; j < temp.size(); j++)
+                    {
+                        if (TestCollision(m_entities[i], temp[j]))
+                        {
+                            m_entities[i]->OnCollision(temp[j]);
+                            temp[j]->OnCollision(m_entities[i]);
+                        }
+                    }
+                }
+            }
+        }
+        temp.clear();
         return nullptr;
 	}
 }

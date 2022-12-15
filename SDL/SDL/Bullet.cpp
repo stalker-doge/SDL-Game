@@ -23,6 +23,7 @@ void Bullet::Initialise()
 	bulletSpeed = 10;
 	lifetime = 100;
 	maxlifetime = 100;
+	m_name = "bullet";
 	m_Rect = new SDL_Rect{ 0,0,64,64 };
 }
 

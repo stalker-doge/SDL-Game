@@ -20,6 +20,7 @@ void Enemy::Initialise()
     Entity::isEnabled = true;
     Entity::isDynamic = true;
     Entity::imageID = imageID;
+	m_name = "enemy";
     m_Rect = new SDL_Rect{ 300,300,64,64 };
     enemySpeed = 1;
 }
@@ -31,4 +32,14 @@ void Enemy::Update()
 
 void Enemy::OnCollision(Entity* collider)
 {
+	if (collider->GetName() == "player")
+	{
+		collider->SetStatus(false);
+	}
+	else if (collider->GetName() == "bullet")
+	{
+		collider->SetStatus(false);
+		this->SetStatus(false);
+	}
+	
 }
