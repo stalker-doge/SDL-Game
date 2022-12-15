@@ -26,8 +26,10 @@ private:
 	InputManager* inputManager;
 	Visualisation* m_visualisation;
 
-	Entity* Button;
+	Entity* m_button;
+	std::vector<Entity*> m_entities;
 
 	bool RunGame = true;
+
 };
 

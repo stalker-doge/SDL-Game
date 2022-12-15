@@ -38,6 +38,8 @@ void MainMenu::Render()
 {
     if (IsGameRunning())
     {
+        m_button->Render();
+
         SDL_RenderClear(gameRender);
         SDL_RenderPresent(gameRender);
         SDL_Delay(1000 / 60);
@@ -51,6 +53,7 @@ bool MainMenu::IsGameRunning()
 
 void MainMenu::Initialise()
 {
+    m_button->Initialise("button", "block.bmp");
     inputManager = InputManager::Instance();
     rgb[0] = 76;
     rgb[1] = 183;
@@ -60,6 +63,8 @@ void MainMenu::Initialise()
     gameRender = SDL_CreateRenderer(gameWindow, -1, SDL_RENDERER_ACCELERATED);
     m_visualisation = Visualisation::Initialise(gameRender);
     SDL_SetRenderDrawColor(gameRender, rgb[0], rgb[1], rgb[2], 255);
+
+    m_entities.push_back(m_button);
 }
 
 void MainMenu::Uninitialise()

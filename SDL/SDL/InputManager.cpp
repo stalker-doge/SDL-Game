@@ -1,4 +1,6 @@
 #include "InputManager.h"
+#include <iostream>
+
 
 InputManager::~InputManager()
 {
@@ -36,6 +38,14 @@ void InputManager::Update()
                  m_keyDOWN.push_back(gameEvent.key.keysym.sym);
 
                 break;
+            }
+            case SDL_MOUSEMOTION:
+            {
+                int x, y;
+
+                SDL_GetMouseState(&x, &y);
+
+                std::cout << x << " : " << y << std::endl;
             }
         }
     }
