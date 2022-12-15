@@ -23,6 +23,10 @@ void MainMenu::Update()
 {
     inputManager->Update();
 
+    int x, y;
+
+    m_mousepos->GetLocation() = SDL_GetMouseState(&x, &y);
+
     if (inputManager->GetKeyDown(SDLK_ESCAPE))
     {
         Uninitialise();
@@ -38,9 +42,10 @@ void MainMenu::Render()
 {
     if (IsGameRunning())
     {
+        SDL_RenderClear(gameRender);
+
         m_button->Render();
 
-        SDL_RenderClear(gameRender);
         SDL_RenderPresent(gameRender);
         SDL_Delay(1000 / 60);
     }
@@ -56,6 +61,7 @@ void MainMenu::Initialise()
     inputManager = InputManager::Instance();
 
     m_button = new Entity();
+    m_mousepos = new Entity();
 
     rgb[0] = 76;
     rgb[1] = 183;
@@ -67,8 +73,9 @@ void MainMenu::Initialise()
     SDL_SetRenderDrawColor(gameRender, rgb[0], rgb[1], rgb[2], 255);
 
     m_button->Initialise("block", "block.bmp");
-
+    m_mousepos->Initialise("player", "block.bmp");
     m_entities.push_back(m_button);
+    m_entities.push_back(m_mousepos);
 }
 
 void MainMenu::Uninitialise()

@@ -30,6 +30,9 @@ private:
 	Visualisation* m_visualisation;
 
 	Entity* m_button;
+
+	Entity* m_mousepos;
+
 	std::vector<Entity*> m_entities;
 
 	bool RunGame = true;

@@ -33,6 +33,31 @@ int main(int argc, char* argv[])
 
 	Mmenu->Uninitialise();
 	*/
+
+	MainMenu* Mmenu = MainMenu::Instance();
+
+	bool loadGame = false;
+
+
+	while (Mmenu->IsGameRunning())
+	{
+		if (loadGame == true)
+		{
+			//Mmenu->Uninitialise();
+			break;
+			//return 0;
+			//Mmenu->Uninitialise();
+		}
+
+		Mmenu->Render();
+		Mmenu->Update();
+
+		//loadGame = true;
+		//Mmenu->Uninitialise();
+	}
+
+	Mmenu->Uninitialise();
+
 	Game* game = Game::Instance();
 
 	while (game->IsGameRunning())
