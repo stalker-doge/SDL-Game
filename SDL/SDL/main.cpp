@@ -8,6 +8,7 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 	srand(time(NULL));	
+	/*
 	MainMenu* Mmenu = MainMenu::Instance();
 
 	bool loadGame = false;
@@ -20,6 +21,7 @@ int main(int argc, char* argv[])
 			//Mmenu->Uninitialise();
 			break;
 			//return 0;
+			//Mmenu->Uninitialise();
 		}
 
 		Mmenu->Render();
@@ -30,7 +32,7 @@ int main(int argc, char* argv[])
 	}
 
 	Mmenu->Uninitialise();
-
+	*/
 	Game* game = Game::Instance();
 
 	while (game->IsGameRunning())

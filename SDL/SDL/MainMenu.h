@@ -15,6 +15,9 @@ public:
 	bool IsGameRunning();
 	void Initialise();
 	void Uninitialise();
+
+	Entity* CheckCollisions();
+	bool TestCollision(Entity* player, Entity* block);
 private:
 	MainMenu();
 	MainMenu(const MainMenu&) = delete;

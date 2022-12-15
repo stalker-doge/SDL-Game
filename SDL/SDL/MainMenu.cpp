@@ -28,7 +28,7 @@ void MainMenu::Update()
         Uninitialise();
     }
 
-    if (inputManager->GetKeyDown(SDL_MOUSEBUTTONDOWN)) 
+    if (inputManager->GetKeyDown(SDLK_e)) 
     {
         RunGame = false;
     }
@@ -53,8 +53,10 @@ bool MainMenu::IsGameRunning()
 
 void MainMenu::Initialise()
 {
-    m_button->Initialise("button", "block.bmp");
     inputManager = InputManager::Instance();
+
+    m_button = new Entity();
+
     rgb[0] = 76;
     rgb[1] = 183;
     rgb[2] = 245;
@@ -63,6 +65,8 @@ void MainMenu::Initialise()
     gameRender = SDL_CreateRenderer(gameWindow, -1, SDL_RENDERER_ACCELERATED);
     m_visualisation = Visualisation::Initialise(gameRender);
     SDL_SetRenderDrawColor(gameRender, rgb[0], rgb[1], rgb[2], 255);
+
+    m_button->Initialise("block", "block.bmp");
 
     m_entities.push_back(m_button);
 }
@@ -76,4 +80,71 @@ void MainMenu::Uninitialise()
     SDL_DestroyWindow(gameWindow);
     SDL_Quit();
 }
+
+Entity* MainMenu::CheckCollisions()
+{
+    while (IsGameRunning())
+    {
+        for (int i = 0; i < m_entities.size(); i++)
+        {
+            if (m_entities[i]->GetDyanmic())
+            {
+
+                for (int j = 0; j < m_entities.size(); j++)
+                {
+                    if (i != j)
+                    {
+                        if (TestCollision(m_entities[i], m_entities[j]))
+                        {
+                            m_entities[i]->OnCollision(m_entities[j]);
+                            m_entities[j]->OnCollision(m_entities[i]);
+                            return m_entities[j];
+                        }
+                    }
+                }
+            }
+        }
+        return nullptr;
+    }
+}
+bool MainMenu::TestCollision(Entity* player, Entity* button)
+{
+    if (!button->GetStatus())
+    {
+        return false;
+    }
+    int playerMinX, playerMinY, playerMaxX, playerMaxY, blockMinX, blockMinY, blockMaxX, blockMaxY;
+    SDL_Rect* playerRect;
+    SDL_Rect* blockRect;
+    playerRect = player->GetLocation();
+    blockRect = button->GetLocation();
+    playerMinX = playerRect->x;
+    playerMinY = playerRect->y;
+    playerMaxX = playerRect->x + playerRect->w;
+    playerMaxY = playerRect->y + playerRect->h;
+
+    blockMinX = blockRect->x;
+    blockMinY = blockRect->y;
+    blockMaxX = blockRect->x + blockRect->w;
+    blockMaxY = blockRect->y + blockRect->h;
+
+    if (playerMinY > blockMaxY)
+    {
+        return false;
+    }
+    else if (playerMaxY < blockMinY)
+    {
+        return false;
+    }
+    else if (playerMinX > blockMaxX)
+    {
+        return false;
+    }
+    else if (playerMaxX < blockMinX)
+    {
+        return false;
+    }
+    return true;
+}
+
 MainMenu* MainMenu::s_instance = nullptr;
