@@ -24,8 +24,13 @@ void MainMenu::Update()
     inputManager->Update();
 
     int x, y;
+    SDL_GetMouseState(&x, &y);
+    //m = new SDL_Rect(SDL_GetMouseState(&x), SDL_GetMouseState(&y), 1, 1);
 
-    m_mousepos->GetLocation() = SDL_GetMouseState(&x, &y);
+    mouseY = y;
+    mouseX = x;
+
+    m_mousepos = new SDL_Rect{ x, y, 1, 1 };
 
     if (inputManager->GetKeyDown(SDLK_ESCAPE))
     {
@@ -45,6 +50,7 @@ void MainMenu::Render()
         SDL_RenderClear(gameRender);
 
         m_button->Render();
+        m_mousepos->Render();
 
         SDL_RenderPresent(gameRender);
         SDL_Delay(1000 / 60);

@@ -32,6 +32,7 @@ private:
 	Entity* m_button;
 
 	Entity* m_mousepos;
+	int mouseX, mouseY;
 
 	std::vector<Entity*> m_entities;
 
