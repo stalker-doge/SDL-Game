@@ -88,3 +88,9 @@ SDL_Rect* Entity::GetLocation()
 {
     return m_Rect;
 }
+
+void Entity::SetPosition(int x, int y)
+{
+	m_Rect->x = x;
+	m_Rect->y = y;
+}

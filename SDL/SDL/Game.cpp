@@ -46,6 +46,7 @@ void Game::Update()
         m_player->Update();
         m_enemy->Update();
         m_bulletPool->Update();
+		m_enemySpawner->Update();
         CheckCollisions();
         Render();
         Uint64 endTimer = SDL_GetPerformanceCounter();
@@ -63,6 +64,7 @@ void Game::Render()
 			m_entities[i]->Render();
 		}
         m_bulletPool->Render();
+        m_enemySpawner->Render();
         SDL_RenderPresent(gameRender);
 }
 
@@ -75,6 +77,7 @@ void Game::Initialise()
 {
     inputManager = InputManager::Instance();
     running = true;
+    m_enemySpawner = new EnemySpawner();
     m_block[0] = new Entity();
     m_block[1] = new Entity();
     m_block[2] = new Entity();
@@ -118,6 +121,7 @@ void Game::Initialise()
 	m_entities.push_back(m_enemy);
     m_entities.push_back(m_bullet);
     m_bulletPool->Initialise(100);
+    m_enemySpawner->Initialise();
 }
 
 void Game::Uninitialise()
@@ -134,6 +138,8 @@ void Game::Uninitialise()
 	}
     delete inputManager;
     delete m_visualisation;
+    delete m_bulletPool;
+    delete m_enemySpawner;
     m_entities.clear();
     SDL_DestroyRenderer(gameRender);
     SDL_DestroyWindow(gameWindow);
@@ -190,7 +196,49 @@ Entity* Game::CheckCollisions()
                 }
             }
         }
+
+		
+        std::vector<Enemy*> temp2 = m_enemySpawner->GetEnemyVector();
+        for (int i = 0; i < m_entities.size(); i++)
+        {
+            if (m_entities[i]->GetStatus())
+            {
+                if (m_entities[i]->GetName() != "player")
+                {
+                    for (int j = 0; j < temp2.size(); j++)
+                    {
+                        if (temp2[j]->GetStatus())
+                        {
+                            if (TestCollision(m_entities[i], temp2[j]))
+                            {
+                                m_entities[i]->OnCollision(temp2[j]);
+                                temp2[j]->OnCollision(m_entities[i]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < temp.size(); i++)
+        {
+			if (temp[i]->GetStatus())
+			{
+				for (int j = 0; j < temp2.size(); j++)
+				{
+					if (temp2[j]->GetStatus())
+					{
+						if (TestCollision(temp[i], temp2[j]))
+						{
+							temp[i]->OnCollision(temp2[j]);
+							temp2[j]->OnCollision(temp[i]);
+						}
+					}
+				}
+			}
+        }
+		
         temp.clear();
+        temp2.clear();
         return nullptr;
 	}
 }

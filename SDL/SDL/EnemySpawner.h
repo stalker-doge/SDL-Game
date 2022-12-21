@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL.h>
 #include "Enemy.h"
+#include <vector>
 class EnemySpawner
 {
 public:
@@ -9,6 +10,8 @@ public:
 	void SpawnEnemy();
 	void Update();
 	void Render();
+	void Initialise();
+	std::vector<Enemy*> GetEnemyVector();
 private:
 	SDL_Rect* m_Rect;
 	SDL_Rect* m_SpawnRect;
@@ -19,9 +22,10 @@ private:
 	int spawnX, spawnY;
 	int spawnWidth, spawnHeight;
 	int spawnTimer = 0;
-	int spawnDelay = 60;
+	int spawnDelay = 5;
 	bool spawn = false;
 	bool spawnOnce = true;
 	Enemy* enemy;
+	std::vector<Enemy*> m_enemies;
 };
 

@@ -20,6 +20,7 @@ public:
 	float GetLifetime();
 	virtual void OnCollision(Entity* collider);
 	SDL_Rect* GetLocation();
+	void SetPosition(int x, int y);
 protected:
 	const char* m_name="";
 	const char* m_imageName;

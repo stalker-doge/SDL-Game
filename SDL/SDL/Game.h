@@ -7,6 +7,7 @@
 #include "Enemy.h"
 #include "Bullet.h"
 #include "ObjectPool.h"
+#include "EnemySpawner.h"
 class Game
 {
 public:
@@ -39,5 +40,6 @@ private:
 	Bullet* m_bullet;
 	std::vector<Entity*> m_entities;
 	ObjectPool* m_bulletPool;
+	EnemySpawner* m_enemySpawner;
 };
 
