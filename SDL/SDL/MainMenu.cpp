@@ -30,7 +30,7 @@ void MainMenu::Update()
     mouseY = y;
     mouseX = x;
 
-    m_mousepos = new SDL_Rect{ x, y, 1, 1 };
+    //m_mousepos = new SDL_Rect{ x, y, 1, 1 };
 
     if (inputManager->GetKeyDown(SDLK_ESCAPE))
     {
