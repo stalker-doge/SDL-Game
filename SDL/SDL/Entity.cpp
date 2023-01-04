@@ -22,7 +22,7 @@ void Entity::Initialise(const char* name, const char* imageName)
     imageID = m_Vis->AddImage(m_imageName);
     m_Rect = new SDL_Rect{ rand() % 1280,rand() % 720,64,64 };
     isEnabled = true;
-	isDynamic = false;
+    isDynamic = false;
 }
 
 void Entity::Render()
@@ -51,6 +51,14 @@ bool Entity::GetDyanmic()
 
 void Entity::Update()
 {
+}
+
+void Entity::ChangeLocation(int x, int y, int h, int w)
+{
+    m_Rect->x = x;
+    m_Rect->y = y;
+    m_Rect->h = h;
+    m_Rect->w = w;
 }
 
 void Entity::OnCollision(Entity* collider)

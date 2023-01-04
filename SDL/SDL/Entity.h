@@ -14,10 +14,11 @@ public:
 	bool GetStatus();
 	bool GetDyanmic();
 	void Update();
+	void ChangeLocation(int x, int y, int h, int w);
 	virtual void OnCollision(Entity* collider);
 	SDL_Rect* GetLocation();
 protected:
-	const char* m_name="";
+	const char* m_name = "";
 	const char* m_imageName;
 	int imageID;
 	Visualisation* m_Vis;
