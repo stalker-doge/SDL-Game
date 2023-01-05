@@ -3,6 +3,7 @@
 #include "InputManager.h"
 #include "Visualisation.h"
 #include "Entity.h"
+#include <iostream>
 
 class MainMenu
 {
@@ -30,7 +31,7 @@ private:
 	Visualisation* m_visualisation;
 
 	Entity* m_button;
-
+	Entity* m_startbutton;
 	Entity* m_mousepos;
 	int mouseX, mouseY;
 

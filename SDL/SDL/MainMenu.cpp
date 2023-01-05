@@ -59,11 +59,11 @@ void MainMenu::Initialise()
     m_visualisation = Visualisation::Initialise(gameRender);
     SDL_SetRenderDrawColor(gameRender, rgb[0], rgb[1], rgb[2], 255);
 
-    m_button->Initialise("block", "block.bmp");
-    m_button->ChangeLocation(640, 420, 64, 384);
+    m_button->Initialise("quit", "quit.bmp");
+    m_button->ChangeLocation(640, 520, 64, 384);
 
-    m_startbutton->Initialise("block", "block.bmp");
-    m_startbutton->ChangeLocation(640, 520, 64, 384);
+    m_startbutton->Initialise("play", "play.bmp");
+    m_startbutton->ChangeLocation(640, 420, 64, 384);
 
     m_mousepos->Initialise("player", "block.bmp");
 
