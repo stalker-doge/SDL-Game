@@ -24,7 +24,7 @@ void Game::Update()
 {
     if (IsGameRunning())
     {
-       
+
         inputManager->Update();
 
         if (inputManager->GetKeyDown(SDLK_ESCAPE))
@@ -40,6 +40,10 @@ void Game::Update()
         if (inputManager->GetKeyHeld(SDLK_SPACE))//shooting function
         {
             m_bulletPool->Shoot(m_player->GetLocation());
+        }
+        if (inputManager->GetMouseHeld(1))
+        {
+            m_bulletPool->Shoot(new SDL_Rect{ inputManager->GetMouseX(),inputManager->GetMouseY(),1,1 });
         }
 
         Uint64 startTimer = SDL_GetPerformanceCounter();

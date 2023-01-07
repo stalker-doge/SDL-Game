@@ -20,8 +20,12 @@ void InputManager::Update()
     SDL_Event gameEvent;
     m_keyDOWN.clear();
     m_keyUP.clear();
+	m_mouseDOWN.clear();
+	m_mouseUP.clear();
+	
     while (SDL_PollEvent(&gameEvent))
     {
+       
         switch (gameEvent.type)
         {
             case SDL_KEYUP:
@@ -37,8 +41,23 @@ void InputManager::Update()
 
                 break;
             }
+			case SDL_MOUSEBUTTONUP:
+			{
+				m_mouseKeys[gameEvent.button.button] = 0;
+				m_mouseUP.push_back(gameEvent.button.button);
+				break;
+			}
+			case SDL_MOUSEBUTTONDOWN:
+			{
+				m_mouseKeys[gameEvent.button.button] = 1;
+				m_mouseDOWN.push_back(gameEvent.button.button);
+				break;
+			}
         }
+        mouse = SDL_GetMouseState(&mouseX, &mouseY);
     }
+
+	
 }
 
 bool InputManager::GetKeyUp(SDL_Keycode userKey)
@@ -62,6 +81,39 @@ bool InputManager::GetKeyHeld(SDL_Keycode userKey)
         return false;
     }
 }
+
+bool InputManager::GetMouseUp(int userButton)
+{
+	return (std::find(m_mouseUP.begin(), m_mouseUP.end(), userButton) != m_mouseUP.end());
+}
+
+bool InputManager::GetMouseDown(int userButton)
+{
+	return std::find(m_mouseDOWN.begin(), m_mouseDOWN.end(), userButton) != m_mouseDOWN.end();
+}
+
+bool InputManager::GetMouseHeld(int userButton)
+{
+	if (m_mouseKeys[userButton] == 1)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+int InputManager::GetMouseX()
+{
+	return mouseX;
+}
+
+int InputManager::GetMouseY()
+{
+	return mouseY;
+}
+
 
 void InputManager::Destroy()
 {

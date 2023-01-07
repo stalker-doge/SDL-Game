@@ -6,10 +6,6 @@ ObjectPool::ObjectPool()
 
 ObjectPool::~ObjectPool()
 {
-	for (int i = 0; i < m_Pool.size(); i++)
-	{
-		delete m_Pool[i];
-	}
 	m_Pool.clear();
 	m_inUse.clear();
 }
