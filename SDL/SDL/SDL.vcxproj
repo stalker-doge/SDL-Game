@@ -160,6 +160,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ObjectPool.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="StarScape.cpp" />
     <ClCompile Include="Visualisation.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +172,7 @@
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="StarScape.h" />
     <ClInclude Include="Visualisation.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

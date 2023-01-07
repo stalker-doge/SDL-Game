@@ -47,6 +47,7 @@ void Game::Update()
         m_enemy->Update();
         m_bulletPool->Update();
 		m_enemySpawner->Update();
+        m_starScape->Update();
         CheckCollisions();
         Render();
         Uint64 endTimer = SDL_GetPerformanceCounter();
@@ -59,12 +60,14 @@ void Game::Update()
 void Game::Render()
 {
         SDL_RenderClear(gameRender);
+		m_starScape->Render(gameRender);
 		for (int i = 0; i < m_entities.size(); i++)
 		{
 			m_entities[i]->Render();
 		}
         m_bulletPool->Render();
         m_enemySpawner->Render();
+		
         SDL_RenderPresent(gameRender);
 }
 
@@ -90,9 +93,10 @@ void Game::Initialise()
 	m_enemy = new Enemy();
     m_bullet = new Bullet();
     m_bulletPool = new ObjectPool();
-    rgb[0] = 76;
-    rgb[1] = 183;
-    rgb[2] = 245;
+    m_starScape = new StarScape();
+    rgb[0] = 1;
+    rgb[1] = 1;
+    rgb[2] = 1;
     SDL_Init(SDL_INIT_EVERYTHING);
     gameWindow = SDL_CreateWindow("Game Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_OPENGL);
     gameRender = SDL_CreateRenderer(gameWindow, -1, SDL_RENDERER_ACCELERATED);
@@ -122,6 +126,7 @@ void Game::Initialise()
     m_entities.push_back(m_bullet);
     m_bulletPool->Initialise(100);
     m_enemySpawner->Initialise();
+    m_starScape->Initialise(gameRender);
 }
 
 void Game::Uninitialise()
@@ -140,6 +145,7 @@ void Game::Uninitialise()
     delete m_visualisation;
     delete m_bulletPool;
     delete m_enemySpawner;
+    delete m_starScape;
     m_entities.clear();
     SDL_DestroyRenderer(gameRender);
     SDL_DestroyWindow(gameWindow);
@@ -278,4 +284,5 @@ bool Game::TestCollision(Entity* player,Entity* block)
     }
     return true;
 }
+
 Game* Game::s_instance = nullptr;
