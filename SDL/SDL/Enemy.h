@@ -6,10 +6,10 @@ class Enemy :
 public:
 	Enemy();
 	~Enemy();
-	const char* GetName();
-	void Initialise();
-	void Update();
-	void OnCollision(Entity* collider) override;
+	virtual const char* GetName();
+	virtual void Initialise();
+	virtual void Update();
+	virtual void OnCollision(Entity* collider) override;
 private:
 	int imageID;
 	int enemyX, enemyY;

@@ -41,17 +41,13 @@ void Game::Update()
         {
             m_bulletPool->Shoot(m_player->GetLocation());
         }
-        if (inputManager->GetMouseHeld(1))
-        {
-            m_bulletPool->Shoot(new SDL_Rect{ inputManager->GetMouseX(),inputManager->GetMouseY(),1,1 });
-        }
-
         Uint64 startTimer = SDL_GetPerformanceCounter();
         m_player->Update();
         m_enemy->Update();
         m_bulletPool->Update();
 		m_enemySpawner->Update();
-        m_starScape->Update();
+        m_boss->Update();
+        //m_starScape->Update();
         CheckCollisions();
         Render();
         Uint64 endTimer = SDL_GetPerformanceCounter();
@@ -71,7 +67,8 @@ void Game::Render()
 		}
         m_bulletPool->Render();
         m_enemySpawner->Render();
-		
+        m_boss->Render();
+        m_boss->RenderHPBar(0, 0, 1000, 20, 0.5, SDL_Color{ 0,98,255 }, SDL_Color{ 1,1,1 }, gameRender);
         SDL_RenderPresent(gameRender);
 }
 
@@ -88,6 +85,7 @@ void Game::Initialise()
     m_block[0] = new Entity();
     m_block[1] = new Entity();
     m_block[2] = new Entity();
+    m_boss = new Boss();
     for (int i = 0; i < 5; i++)
     {
         m_spikeBlocks[i] = new Entity();
@@ -131,6 +129,7 @@ void Game::Initialise()
     m_bulletPool->Initialise(100);
     m_enemySpawner->Initialise();
     m_starScape->Initialise(gameRender);
+    m_boss->Initialise();
 }
 
 void Game::Uninitialise()
@@ -287,6 +286,11 @@ bool Game::TestCollision(Entity* player,Entity* block)
         return false;
     }
     return true;
+}
+
+SDL_Renderer* Game::GetRenderer()
+{
+    return gameRender;
 }
 
 Game* Game::s_instance = nullptr;

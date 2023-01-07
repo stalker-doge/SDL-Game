@@ -9,6 +9,7 @@
 #include "ObjectPool.h"
 #include "EnemySpawner.h"
 #include "StarScape.h"
+#include "Boss.h"
 class Game
 {
 public:
@@ -23,6 +24,7 @@ public:
 	void RestartGame();
 	Entity* CheckCollisions();
 	bool TestCollision(Entity* player, Entity* block);
+	SDL_Renderer* GetRenderer();
 private:
 	Game();
 	Game(const Game&) = delete;
@@ -43,6 +45,6 @@ private:
 	ObjectPool* m_bulletPool;
 	StarScape* m_starScape;
 	EnemySpawner* m_enemySpawner;
-
+	Boss* m_boss;
 };
 
