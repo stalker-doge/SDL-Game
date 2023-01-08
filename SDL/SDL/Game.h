@@ -13,6 +13,7 @@
 #include <iostream>
 #include <SDL_ttf.h>
 #include "UserInterface.h"
+#include "MainMenu.h"
 class Game
 {
 public:
@@ -49,5 +50,6 @@ private:
 	Uint64 timer,shootTimer;
 	UserInterface* m_userInterface;
 	int score;
+	MainMenu* m_mainMenu;
 };
 

@@ -31,8 +31,14 @@ void UserInterface::Render()
     Visualisation* m_vis = Visualisation::Instance();
     HealthMessage = SDL_CreateTextureFromSurface(m_vis->GetRender(), surfaceHealthMessage);
 	Message = SDL_CreateTextureFromSurface(m_vis->GetRender(), surfaceMessage);
-    SDL_RenderCopy(m_vis->GetRender(), Message, NULL, &Message_rect);
-	SDL_RenderCopy(m_vis->GetRender(), HealthMessage, NULL, &HealthMessage_rect);
+    if (score > 0)
+    {
+        SDL_RenderCopy(m_vis->GetRender(), Message, NULL, &Message_rect);
+    }
+    if (health > 0)
+    {
+        SDL_RenderCopy(m_vis->GetRender(), HealthMessage, NULL, &HealthMessage_rect);
+    }
 }
 
 void UserInterface::SetScore(int score)

@@ -21,6 +21,7 @@ public:
 	virtual int OnCollision(Entity* collider);
 	SDL_Rect* GetLocation();
 	void SetPosition(int x, int y);
+	void ChangeLocation(int x, int y, int h, int w);
 	void SetName(const char* name);
 protected:
 	const char* m_name="";

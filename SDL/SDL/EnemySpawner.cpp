@@ -69,11 +69,15 @@ void EnemySpawner::Render()
 {
 	for (int i = 0; i < m_enemies.size(); i++)
 	{
-		m_enemies[i]->Render();
 		if (m_enemies[i]->GetHP() <= 0)
 		{
 			m_enemies.erase(m_enemies.begin() + i);
 		}
+		else
+		{
+			m_enemies[i]->Render();
+		}
+
 	}
 }
 

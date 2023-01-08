@@ -17,6 +17,7 @@ void Enemy::Initialise()
 {
     m_Vis = Visualisation::Instance();
     imageID = m_Vis->AddImage("enemy.bmp");
+	auto debug = imageID;
     Entity::isEnabled = true;
     Entity::isDynamic = true;
     Entity::imageID = imageID;

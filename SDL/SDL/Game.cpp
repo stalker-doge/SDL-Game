@@ -24,7 +24,6 @@ void Game::Update()
 {
     if (IsGameRunning())
     {
-        std::cout << "Beep\n";
         inputManager->Update();
 
         if (inputManager->GetKeyDown(SDLK_ESCAPE))
@@ -43,7 +42,10 @@ void Game::Update()
         }
         if (inputManager->GetKeyDown(SDLK_q))
         {
-            m_bulletPool->Wipe();
+            if (m_boss->bossDeath1)
+            {
+                m_bulletPool->Wipe();
+            }
         }
         Uint64 startTimer = SDL_GetPerformanceCounter();
         m_player->Update();
@@ -83,9 +85,18 @@ void Game::Update()
         }
         Uint64 endTimer = SDL_GetPerformanceCounter();
         float elapsedMS = (endTimer - startTimer) / (float)SDL_GetPerformanceFrequency() * 1000;//capping the game at 60fps
-        elapsedMS = SDL_max(elapsedMS, 0.01);
+        elapsedMS = SDL_clamp(elapsedMS,10,0.01);
+        if (m_player->GetHP() <= 0)
+        {
+            m_mainMenu->SetScore(score);
+            StopGame();
+        }
+        if (m_boss->bossDeath2)
+        {
+            m_mainMenu->SetScore(score);
+            StopGame();
+        }
         SDL_Delay(floor(16.666f - elapsedMS));
-        std::cout << "Boop\n";
     }
 }
 
@@ -112,6 +123,7 @@ bool Game::IsGameRunning()
 void Game::Initialise()
 {
     inputManager = InputManager::Instance();
+	m_mainMenu = MainMenu::Instance();
     running = true;
     m_enemySpawner = new EnemySpawner();
     m_boss = new Boss();
@@ -128,7 +140,7 @@ void Game::Initialise()
     rgb[2] = 0;
     SDL_Init(SDL_INIT_EVERYTHING);
     TTF_Init();
-    gameWindow = SDL_CreateWindow("Game Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_OPENGL);
+    gameWindow = SDL_CreateWindow("HellSpace", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_OPENGL);
     gameRender = SDL_CreateRenderer(gameWindow, -1, SDL_RENDERER_ACCELERATED);
     m_visualisation = Visualisation::Initialise(gameRender);
     SDL_SetRenderDrawColor(gameRender, rgb[0], rgb[1], rgb[2], 255);
@@ -149,18 +161,20 @@ void Game::Initialise()
 
 void Game::Uninitialise()
 {
+    inputManager->Destroy();
+    m_visualisation->~Visualisation();
     delete m_player;
     delete m_enemy;
-    delete inputManager;
-    delete m_visualisation;
     delete m_bulletPool;
     delete m_enemySpawner;
     delete m_starScape;
+    delete m_userInterface;
     delete m_boss;
     m_entities.clear();
     SDL_DestroyRenderer(gameRender);
     SDL_DestroyWindow(gameWindow);
     SDL_Quit();
+    m_mainMenu->Initialise();
 }
 void Game::StopGame()
 {

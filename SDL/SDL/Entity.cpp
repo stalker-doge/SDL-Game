@@ -28,6 +28,10 @@ void Entity::Initialise(const char* name, const char* imageName)
 
 void Entity::Render()
 {
+    if (imageID < 0)
+    {
+		isEnabled = false;
+    }
     if (isEnabled)
     {
         m_Vis->DrawImage(imageID, m_Rect);
@@ -89,6 +93,14 @@ void Entity::SetPosition(int x, int y)
 {
 	m_Rect->x = x;
 	m_Rect->y = y;
+}
+
+void Entity::ChangeLocation(int x, int y, int h, int w)
+{
+	m_Rect->x = x;
+	m_Rect->y = y;
+	m_Rect->h = h;
+	m_Rect->w = w;
 }
 
 void Entity::SetName(const char* name)

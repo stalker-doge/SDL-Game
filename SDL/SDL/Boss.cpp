@@ -16,7 +16,7 @@ const char* Boss::GetName()
 void Boss::Initialise()
 {
 	m_Vis = Visualisation::Instance();
-	imageID = m_Vis->AddImage("enemy.bmp");
+	imageID = m_Vis->AddImage("boss.bmp");
 	Entity::isEnabled = false;
 	Entity::isDynamic = true;
 	Entity::imageID = imageID;
@@ -30,10 +30,7 @@ void Boss::Initialise()
 
 void Boss::Update()
 {
-	if (bossHP <= 0)
-	{
-		isEnabled = false;
-	}
+
 	if (isEnabled)
 	{
 		if (m_Rect->y < 0)
@@ -57,11 +54,16 @@ int Boss::OnCollision(Entity* collider)
 		{
 			if (bossDeath1)
 			{
+				bossHP = maxHP;
 				bossDeath2 = true;
+				isEnabled = false;
 				return 1000;
 			}
 			else
 			{
+				bossHP = maxHP*2;
+				maxHP = bossHP;
+				isEnabled = false;
 				bossDeath1 = true;
 				return 1000;
 			}

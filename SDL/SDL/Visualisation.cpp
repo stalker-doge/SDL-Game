@@ -50,7 +50,10 @@ void Visualisation::RemoveImage(int userInt)
 }
 void Visualisation::DrawImage(int userInt, SDL_Rect* rect)
 {
-    SDL_RenderCopy(renderer, textureStorage[userInt], NULL, rect);
+    if (userInt >= 0)
+    {
+        SDL_RenderCopy(renderer, textureStorage[userInt], NULL, rect);
+    }
 }
 
 SDL_Renderer* Visualisation::GetRender()

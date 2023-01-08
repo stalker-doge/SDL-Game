@@ -2,15 +2,38 @@
 #include <iostream>
 #include "Game.h"
 #include <time.h>
+#include "MainMenu.h"
 using namespace std;
 int main(int argc, char* argv[])
 {
 	srand(time(NULL));
-	Game* game=Game::Instance();
+	MainMenu* Mmenu = MainMenu::Instance();
 
-	while (game->IsGameRunning())
+	bool loadGame = false;
+
+	
+	while (!Mmenu->ExitGame)
 	{
-		game->Update();
+		while (Mmenu->IsGameRunning())
+		{
+
+			Mmenu->Render();
+			Mmenu->Update();
+		}
+
+		Mmenu->Uninitialise();
+
+		if (Mmenu->RunGameCheck == true)
+		{
+			Game* game = Game::Instance();
+
+			while (game->IsGameRunning())
+			{
+				game->Render();
+				game->Update();
+			}
+		}
 	}
+
 	return 0;
 }

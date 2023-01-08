@@ -17,7 +17,7 @@ private:
 	int imageID;
 	int bossX, bossY;
 	float bossSpeed;
-	int bossHP = 20;
+	int bossHP = 1000;
 	int maxHP;
 };
 
