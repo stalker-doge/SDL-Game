@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include "InputManager.h"
 #include "Visualisation.h"
+#include "StarScape.h"
 #include "Entity.h"
 #include <iostream>
 
@@ -29,6 +30,7 @@ private:
 	int rgb[3];
 	InputManager* inputManager;
 	Visualisation* m_visualisation;
+	StarScape* m_stars;
 
 	Entity* m_button;
 	Entity* m_startbutton;

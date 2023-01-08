@@ -31,6 +31,7 @@ void MainMenu::Render()
         m_startbutton->Render();
         m_button->Render();
         m_mousepos->Render();
+        m_stars->Render(gameRender);
 
         SDL_RenderPresent(gameRender);
         SDL_Delay(1000 / 60);
@@ -49,6 +50,7 @@ void MainMenu::Initialise()
     m_startbutton = new Entity();
     m_button = new Entity();
     m_mousepos = new Entity();
+    m_stars = new StarScape();
 
     rgb[0] = 82;
     rgb[1] = 5;
@@ -70,12 +72,14 @@ void MainMenu::Initialise()
     m_entities.push_back(m_button);
     m_entities.push_back(m_startbutton);
     m_entities.push_back(m_mousepos);
+
+    m_stars->Initialise(gameRender);
 }
 
 void MainMenu::Update()
 {
     inputManager->Update();
-
+    m_stars->Update();
     int x, y;
     SDL_GetMouseState(&x, &y);
     //m = new SDL_Rect(SDL_GetMouseState(&x), SDL_GetMouseState(&y), 1, 1);
@@ -83,21 +87,20 @@ void MainMenu::Update()
     mouseY = y;
     mouseX = x;
 
-    m_mousepos->ChangeLocation(mouseX, mouseY, 2, 2);
+    m_mousepos->ChangeLocation(mouseX, mouseY, 10, 10);
     //m_mousepos = new SDL_Rect{ x, y, 1, 1 };
 
-    if (TestCollision(m_mousepos, m_button))
+    if (inputManager->GetMouseDown(1))
     {
-        if (inputManager->GetMouseDown(1))
+        if (TestCollision(m_mousepos, m_button))
         {
-            std::cout << "bob";
             Uninitialise();
         }
     }
 
     if (TestCollision(m_mousepos, m_startbutton))
     {
-        if (inputManager->GetKeyDown(SDLK_e))
+        if (inputManager->GetMouseDown(1))
         {
             RunGame = false;
         }

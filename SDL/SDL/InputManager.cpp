@@ -22,6 +22,10 @@ void InputManager::Update()
     SDL_Event gameEvent;
     m_keyDOWN.clear();
     m_keyUP.clear();
+
+    m_mouseDOWN.clear();
+    m_mouseUP.clear();
+
     while (SDL_PollEvent(&gameEvent))
     {
         switch (gameEvent.type)
@@ -47,7 +51,20 @@ void InputManager::Update()
 
                 std::cout << x << " : " << y << std::endl;
             }
+            case SDL_MOUSEBUTTONUP:
+            {
+                m_mouseKeys[gameEvent.button.button] = 0;
+                m_mouseUP.push_back(gameEvent.button.button);
+                break;
+            }
+            case SDL_MOUSEBUTTONDOWN:
+            {
+                m_mouseKeys[gameEvent.button.button] = 1;
+                m_mouseDOWN.push_back(gameEvent.button.button);
+                break;
+            }
         }
+        mouse = SDL_GetMouseState(&mouseX, &mouseY);
     }
 }
 
