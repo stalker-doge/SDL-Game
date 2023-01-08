@@ -28,6 +28,10 @@ void EnemySpawner::SpawnEnemy()
 			spawnOnce = true;
 			enemy = new Enemy();
 			enemy->Initialise();
+			if (canUpgrade)
+			{
+				enemy->EnemyUpgrade();
+			}
 			enemy->SetPosition(spawnX, spawnY);
 			enemyCount++;
 			m_enemies.push_back(enemy);
@@ -53,8 +57,12 @@ void EnemySpawner::Update()
 	SpawnEnemy();
 	for (int i = 0; i < m_enemies.size(); i++)
 	{
-		m_enemies[i]->Update();
+		if (m_enemies[i]->GetStatus())
+		{
+			m_enemies[i]->Update();
+		}
 	}
+	CleanUp();
 }
 
 void EnemySpawner::Render()
@@ -62,13 +70,34 @@ void EnemySpawner::Render()
 	for (int i = 0; i < m_enemies.size(); i++)
 	{
 		m_enemies[i]->Render();
+		if (m_enemies[i]->GetHP() <= 0)
+		{
+			m_enemies.erase(m_enemies.begin() + i);
+		}
 	}
 }
 
 void EnemySpawner::Initialise()
 {
-	m_Rect = new SDL_Rect{ rand() % 1280,rand() % 720,64,64 };
+	m_Rect = new SDL_Rect{ rand() % 980+300,rand() % 420+300,64,64 };
 	m_SpawnRect = new SDL_Rect{ 0,0,1280,720 };
+}
+
+void EnemySpawner::CleanUp()
+{
+	//erases enemies that aren't active anymore
+	for (int i = 0; i < m_enemies.size(); i++)
+	{
+		if (!m_enemies[i]->GetStatus())
+		{
+			m_enemies.erase(m_enemies.begin() + i);
+		}
+	}
+}
+
+void EnemySpawner::Upgrade(bool upgrade)
+{
+	canUpgrade = upgrade;
 }
 
 std::vector<Enemy*> EnemySpawner::GetEnemyVector()

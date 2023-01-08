@@ -12,6 +12,7 @@ public:
 	int AddImage(const char* character);
 	void RemoveImage(int userInt);
 	void DrawImage(int userInt, SDL_Rect* rect);
+	SDL_Renderer* GetRender();
 private:
 	static Visualisation* s_instance;
 	Visualisation();

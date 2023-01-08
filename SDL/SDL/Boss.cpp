@@ -17,35 +17,89 @@ void Boss::Initialise()
 {
 	m_Vis = Visualisation::Instance();
 	imageID = m_Vis->AddImage("enemy.bmp");
-	Entity::isEnabled = true;
+	Entity::isEnabled = false;
 	Entity::isDynamic = true;
 	Entity::imageID = imageID;
 	m_name = "boss";
 	m_Rect = new SDL_Rect{ 300,300,200,200 };
 	bossSpeed = 1;
+	bossDeath1 = false;
+	bossDeath2 = false;
+	maxHP = bossHP;
 }
 
 void Boss::Update()
 {
-	m_Rect->x -= bossSpeed;
+	if (bossHP <= 0)
+	{
+		isEnabled = false;
+	}
+	if (isEnabled)
+	{
+		if (m_Rect->y < 0)
+		{
+			bossSpeed = 1;
+		}
+		if (m_Rect->y + m_Rect->h > 720)
+		{
+			bossSpeed = -1;
+		}
+		m_Rect->y += bossSpeed;
+	}
 }
 
-void Boss::OnCollision(Entity* collider)
+int Boss::OnCollision(Entity* collider)
 {
+	if (collider->GetName() == "bullet")
+	{
+		bossHP -= 1;
+		if (bossHP <= 0)
+		{
+			if (bossDeath1)
+			{
+				bossDeath2 = true;
+				return 1000;
+			}
+			else
+			{
+				bossDeath1 = true;
+				return 1000;
+			}
+		}
+		return 0;
+		collider->SetStatus(false);
+	}
+	return 0;
 }
 
 void Boss::RenderHPBar(int x, int y, int w, int h, float Percent, SDL_Color FGColor, SDL_Color BGColor, SDL_Renderer* render)
 {
-	Percent = Percent > 1.f ? 1.f : Percent < 0.f ? 0.f : Percent;
-	SDL_Color old;
-	SDL_GetRenderDrawColor(render, &old.r, &old.g, &old.g, &old.a);
-	SDL_Rect bgrect = { x, y, w, h };
+	SDL_Rect background;
+	background.x = x;
+	background.y = y;
+	background.w = w;
+	background.h = h;
 	SDL_SetRenderDrawColor(render, BGColor.r, BGColor.g, BGColor.b, BGColor.a);
-	SDL_RenderFillRect(render, &bgrect);
+	SDL_RenderFillRect(render, &background);
+
+	SDL_Rect foreground;
+	foreground.x = x;
+	foreground.y = y;
+	foreground.w = (int)(w * Percent);
+	foreground.h = h;
 	SDL_SetRenderDrawColor(render, FGColor.r, FGColor.g, FGColor.b, FGColor.a);
-	int pw = (int)((float)w * Percent);
-	int px = x + (w - pw);
-	SDL_Rect fgrect = { px, y, pw, h };
-	SDL_RenderFillRect(render, &fgrect);
-	SDL_SetRenderDrawColor(render, old.r, old.g, old.b, old.a);
+	SDL_RenderFillRect(render, &foreground);
+	SDL_SetRenderDrawColor(render, 0, 0, 0, 255);
+}
+
+void Boss::Render()
+{
+	if (isEnabled)
+	{
+		m_Vis = Visualisation::Instance();
+		SDL_Color FGColor = { 0, 255, 0, 255 };
+		SDL_Color BGColor = { 255, 0, 0, 255 };
+		m_Vis->DrawImage(imageID, m_Rect);
+		RenderHPBar(m_Rect->x, m_Rect->y - 10, m_Rect->w, 5, (float)bossHP / maxHP, FGColor, BGColor, m_Vis->GetRender());
+	}
 }

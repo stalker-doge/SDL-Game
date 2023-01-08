@@ -18,9 +18,10 @@ public:
 	float GetMaxLifetime();
 	virtual void GenericAction();
 	float GetLifetime();
-	virtual void OnCollision(Entity* collider);
+	virtual int OnCollision(Entity* collider);
 	SDL_Rect* GetLocation();
 	void SetPosition(int x, int y);
+	void SetName(const char* name);
 protected:
 	const char* m_name="";
 	const char* m_imageName;

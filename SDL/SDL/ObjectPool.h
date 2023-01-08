@@ -13,7 +13,9 @@ public:
 	void ReUseObject(Bullet* object);
 	void Initialise(int max_size);
 	void Shoot(SDL_Rect* location);
+	void EnemyShoot(SDL_Rect* location);
 	void Render();
+	void Wipe();
 	std::vector<Bullet*> GetUsedVector();
 private:
 	int max_size;

@@ -37,8 +37,9 @@ void Bullet::Update()
 
 }
 
-void Bullet::OnCollision(Entity* collider)
+int Bullet::OnCollision(Entity* collider)
 {
+	return 0;
 }
 
 void Bullet::Shoot(SDL_Rect* location)
@@ -46,4 +47,9 @@ void Bullet::Shoot(SDL_Rect* location)
 	m_Rect->x = location->x;
 	m_Rect->y = location->y;
 	isEnabled = true;
+}
+
+void Bullet::SetSpeed(float speed)
+{
+	bulletSpeed = speed;
 }

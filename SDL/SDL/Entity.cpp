@@ -75,13 +75,9 @@ float Entity::GetLifetime()
     return lifetime;
 }
 
-void Entity::OnCollision(Entity* collider)
+int Entity::OnCollision(Entity* collider)
 {
-    if (collider->GetName() == "bullet")
-    {
-    collider->SetStatus(false);
-    this->SetStatus(false);
-    }
+    return 0;
 }
 
 SDL_Rect* Entity::GetLocation()
@@ -93,4 +89,9 @@ void Entity::SetPosition(int x, int y)
 {
 	m_Rect->x = x;
 	m_Rect->y = y;
+}
+
+void Entity::SetName(const char* name)
+{
+    m_name=name;
 }

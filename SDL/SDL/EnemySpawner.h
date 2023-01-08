@@ -11,6 +11,8 @@ public:
 	void Update();
 	void Render();
 	void Initialise();
+	void CleanUp();
+	void Upgrade(bool upgrade);
 	std::vector<Enemy*> GetEnemyVector();
 private:
 	SDL_Rect* m_Rect;
@@ -27,5 +29,6 @@ private:
 	bool spawnOnce = true;
 	Enemy* enemy;
 	std::vector<Enemy*> m_enemies;
+	bool canUpgrade = false;
 };
 

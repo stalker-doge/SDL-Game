@@ -9,8 +9,9 @@ public:
 	const char* GetName();
 	void Initialise();
 	void Update();
-	void OnCollision(Entity* collider) override;
+	int OnCollision(Entity* collider) override;
 	void Shoot(SDL_Rect* location);
+	void SetSpeed(float speed);
 private:
 	int imageID;
 	int bulletX, bulletY;

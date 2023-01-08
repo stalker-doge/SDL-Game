@@ -53,4 +53,10 @@ void Visualisation::DrawImage(int userInt, SDL_Rect* rect)
     SDL_RenderCopy(renderer, textureStorage[userInt], NULL, rect);
 }
 
+SDL_Renderer* Visualisation::GetRender()
+{
+	return renderer;
+}
+
+
 Visualisation* Visualisation::s_instance = nullptr;

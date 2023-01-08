@@ -10,6 +10,9 @@
 #include "EnemySpawner.h"
 #include "StarScape.h"
 #include "Boss.h"
+#include <iostream>
+#include <SDL_ttf.h>
+#include "UserInterface.h"
 class Game
 {
 public:
@@ -36,9 +39,6 @@ private:
 	Visualisation* m_visualisation;
 	bool running;
 	Player* m_player;
-	Entity* m_block[3];
-	Entity* m_spikeBlocks[5];
-	Entity* m_star;
 	Enemy* m_enemy;
 	Bullet* m_bullet;
 	std::vector<Entity*> m_entities;
@@ -46,5 +46,8 @@ private:
 	StarScape* m_starScape;
 	EnemySpawner* m_enemySpawner;
 	Boss* m_boss;
+	Uint64 timer,shootTimer;
+	UserInterface* m_userInterface;
+	int score;
 };
 

@@ -75,6 +75,16 @@ void ObjectPool::Shoot(SDL_Rect* location)
 {
 	Bullet* temp = GetObject();
 	temp->Shoot(location);
+	temp->SetSpeed(10);
+	temp->SetName("bullet");
+}
+
+void ObjectPool::EnemyShoot(SDL_Rect* location)
+{
+	Bullet* temp = GetObject();
+	temp->Shoot(location);
+	temp->SetSpeed(-10);
+	temp->SetName("EnemyBullet");
 }
 
 void ObjectPool::Render()
@@ -82,6 +92,14 @@ void ObjectPool::Render()
 	for (int i = 0; i < m_inUse.size(); i++)
 	{
 		m_inUse[i]->Render();
+	}
+}
+
+void ObjectPool::Wipe()
+{
+	while (m_inUse.size() > 0)
+	{
+		ReUseObject(m_inUse[0]);
 	}
 }
 

@@ -21,6 +21,7 @@ void Player::Initialise()
     Entity::isEnabled = true;
     Entity::isDynamic = true;
     m_Rect = new SDL_Rect{ 100,100,64,64 };
+    HP = 100;
 }
 
 
@@ -55,30 +56,56 @@ void Player::Update()
     {
         m_Rect->x = playerX;
     }
+	
 }
 
-void Player::OnCollision(Entity*collider)
+int Player::OnCollision(Entity*collider)
 {
     if (collider != nullptr)
     {
 
-        if (collider->GetName() == "block")
+        if (collider->GetName() == "EnemyBullet")
         {
-            m_Rect->x = playerX;
-            m_Rect->y = playerY;
+            HP--;
         }
-        else if (collider->GetName() == "spike")
-        {
-            int tempX, tempY;
-            tempX = playerX - m_Rect->x;
-            tempY = playerY - m_Rect->y;
-            m_Rect->x = playerX - (playerSpeed * -tempX);
-            m_Rect->y = playerY - (playerSpeed * -tempY);
-        }
-        else if (collider->GetName() == "star")
-        {
-            collider->SetStatus(false);
-            playerSpeed = playerSpeed * 2;
-        }
+		else if (collider->GetName() == "enemy")
+		{
+			HP--;
+		}
     }
+    return 0;
+}
+
+void Player::RenderHPBar(int x, int y, int w, int h, float Percent, SDL_Color FGColor, SDL_Color BGColor, SDL_Renderer* render)
+{
+    SDL_Rect background;
+    background.x = x;
+    background.y = y;
+    background.w = w;
+    background.h = h;
+    SDL_SetRenderDrawColor(render, BGColor.r, BGColor.g, BGColor.b, BGColor.a);
+    SDL_RenderFillRect(render, &background);
+
+    SDL_Rect foreground;
+    foreground.x = x;
+    foreground.y = y;
+    foreground.w = (int)(w * Percent);
+    foreground.h = h;
+    SDL_SetRenderDrawColor(render, FGColor.r, FGColor.g, FGColor.b, FGColor.a);
+    SDL_RenderFillRect(render, &foreground);
+    SDL_SetRenderDrawColor(render, 0, 0, 0, 255);
+}
+
+void Player::Render()
+{
+    m_Vis = Visualisation::Instance();
+	m_Vis->DrawImage(imageID, m_Rect);
+    SDL_Color FGColor = { 0, 255, 0, 255 };
+    SDL_Color BGColor = { 255, 0, 0, 255 };
+	RenderHPBar(0, 0, 100, 20, 1, FGColor, BGColor, m_Vis->GetRender());
+}
+
+int Player::GetHP()
+{
+    return HP;
 }

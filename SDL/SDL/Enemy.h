@@ -9,10 +9,14 @@ public:
 	virtual const char* GetName();
 	virtual void Initialise();
 	virtual void Update();
-	virtual void OnCollision(Entity* collider) override;
+	virtual int OnCollision(Entity* collider) override;
+	virtual int GetHP();
+	virtual void EnemyUpgrade();
 private:
 	int imageID;
 	int enemyX, enemyY;
 	float enemySpeed;
+	int enemyHP;
+	int score;
 };
 
