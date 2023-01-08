@@ -21,6 +21,8 @@ public:
 
 	Entity* CheckCollisions();
 	bool TestCollision(Entity* player, Entity* block);
+
+	bool RunGameCheck = true;
 private:
 	MainMenu();
 	MainMenu(const MainMenu&) = delete;
@@ -41,5 +43,7 @@ private:
 	std::vector<Entity*> m_entities;
 
 	bool RunGame = true;
+
+
 
 };

@@ -79,7 +79,8 @@ void MainMenu::Initialise()
 void MainMenu::StopGame()
 {
     RunGame = false;
-    Uninitialise();
+    RunGameCheck = false;
+    //Uninitialise();
 }
 
 void MainMenu::Update()

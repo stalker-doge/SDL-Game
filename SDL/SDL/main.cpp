@@ -56,14 +56,17 @@ int main(int argc, char* argv[])
 		//Mmenu->Uninitialise();
 	}
 
-	//Mmenu->Uninitialise();
+	Mmenu->Uninitialise();
 
-	Game* game = Game::Instance();
-
-	while (game->IsGameRunning())
+	if (Mmenu->RunGameCheck == true) 
 	{
-		game->Render();
-		game->Update();
+		Game* game = Game::Instance();
+
+		while (game->IsGameRunning())
+		{
+			game->Render();
+			game->Update();
+		}
 	}
 
 	return 0;
