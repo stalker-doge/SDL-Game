@@ -42,7 +42,7 @@ private:
 
 	std::vector<Entity*> m_entities;
 
-	bool RunGame = true;
+	bool RunMenu = true;
 
 
 

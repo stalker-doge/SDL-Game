@@ -40,7 +40,7 @@ void MainMenu::Render()
 
 bool MainMenu::IsGameRunning()
 {
-    return RunGame;
+    return RunMenu;
 }
 
 void MainMenu::Initialise()
@@ -78,7 +78,7 @@ void MainMenu::Initialise()
 
 void MainMenu::StopGame()
 {
-    RunGame = false;
+    RunMenu = false;
     RunGameCheck = false;
     //Uninitialise();
 }
@@ -101,7 +101,7 @@ void MainMenu::Update()
     {
         if (inputManager->GetMouseDown(1))
         {
-            RunGame = false;
+            RunMenu = false;
         }
     }
 
