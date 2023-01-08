@@ -52,8 +52,8 @@ void MainMenu::Initialise()
     m_mousepos = new Entity();
     m_stars = new StarScape();
 
-    rgb[0] = 82;
-    rgb[1] = 5;
+    rgb[0] = 0;
+    rgb[1] = 0;
     rgb[2] = 0;
     SDL_Init(SDL_INIT_EVERYTHING);
     gameWindow = SDL_CreateWindow("Main Menu", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_OPENGL);
@@ -62,12 +62,12 @@ void MainMenu::Initialise()
     SDL_SetRenderDrawColor(gameRender, rgb[0], rgb[1], rgb[2], 255);
 
     m_button->Initialise("quit", "quit.bmp");
-    m_button->ChangeLocation(450, 520, 64, 384);
+    m_button->ChangeLocation(450, 320, 128 , 384);
 
     m_startbutton->Initialise("play", "play.bmp");
-    m_startbutton->ChangeLocation(450, 120, 64, 384);
+    m_startbutton->ChangeLocation(450, 120, 128, 384);
 
-    m_mousepos->Initialise("player", "block.bmp");
+    m_mousepos->Initialise("player", "eh.1.bmp");
 
     m_entities.push_back(m_button);
     m_entities.push_back(m_startbutton);
