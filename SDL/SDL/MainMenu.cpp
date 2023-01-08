@@ -88,7 +88,7 @@ void MainMenu::Update()
 
     if (TestCollision(m_mousepos, m_button))
     {
-        if (inputManager->GetKeyDown(SDL_BUTTON_LEFT))
+        if (inputManager->GetMouseDown(1))
         {
             std::cout << "bob";
             Uninitialise();

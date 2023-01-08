@@ -73,6 +73,38 @@ bool InputManager::GetKeyHeld(SDL_Keycode userKey)
     }
 }
 
+bool InputManager::GetMouseUp(int userButton)
+{
+    return (std::find(m_mouseUP.begin(), m_mouseUP.end(), userButton) != m_mouseUP.end());
+}
+
+bool InputManager::GetMouseDown(int userButton)
+{
+    return std::find(m_mouseDOWN.begin(), m_mouseDOWN.end(), userButton) != m_mouseDOWN.end();
+}
+
+bool InputManager::GetMouseHeld(int userButton)
+{
+    if (m_mouseKeys[userButton] == 1)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+int InputManager::GetMouseX()
+{
+    return mouseX;
+}
+
+int InputManager::GetMouseY()
+{
+    return mouseY;
+}
+
 void InputManager::Destroy()
 {
     s_instance = nullptr;
