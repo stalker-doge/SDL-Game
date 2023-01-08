@@ -16,6 +16,7 @@ public:
 	void Render();
 	bool IsGameRunning();
 	void Initialise();
+	void StopGame();
 	void Uninitialise();
 
 	Entity* CheckCollisions();

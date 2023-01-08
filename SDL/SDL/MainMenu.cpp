@@ -62,10 +62,10 @@ void MainMenu::Initialise()
     SDL_SetRenderDrawColor(gameRender, rgb[0], rgb[1], rgb[2], 255);
 
     m_button->Initialise("quit", "quit.bmp");
-    m_button->ChangeLocation(640, 520, 64, 384);
+    m_button->ChangeLocation(450, 520, 64, 384);
 
     m_startbutton->Initialise("play", "play.bmp");
-    m_startbutton->ChangeLocation(640, 420, 64, 384);
+    m_startbutton->ChangeLocation(450, 120, 64, 384);
 
     m_mousepos->Initialise("player", "block.bmp");
 
@@ -74,6 +74,12 @@ void MainMenu::Initialise()
     m_entities.push_back(m_mousepos);
 
     m_stars->Initialise(gameRender);
+}
+
+void MainMenu::StopGame()
+{
+    RunGame = false;
+    Uninitialise();
 }
 
 void MainMenu::Update()
@@ -87,16 +93,8 @@ void MainMenu::Update()
     mouseY = y;
     mouseX = x;
 
-    m_mousepos->ChangeLocation(mouseX, mouseY, 10, 10);
+    m_mousepos->ChangeLocation(mouseX, mouseY, 1, 1);
     //m_mousepos = new SDL_Rect{ x, y, 1, 1 };
-
-    if (inputManager->GetMouseDown(1))
-    {
-        if (TestCollision(m_mousepos, m_button))
-        {
-            Uninitialise();
-        }
-    }
 
     if (TestCollision(m_mousepos, m_startbutton))
     {
@@ -106,21 +104,24 @@ void MainMenu::Update()
         }
     }
 
-    if (inputManager->GetKeyDown(SDLK_ESCAPE))
+    if (inputManager->GetMouseDown(1))
     {
-        Uninitialise();
+        if (TestCollision(m_mousepos, m_button))
+        {
+            StopGame();
+        }
     }
     /*
-    if (inputManager->GetKeyDown(SDLK_e))
+    if (inputManager->GetKeyDown(SDLK_ESCAPE))
     {
-        RunGame = false;
+        StopGame();
     }
     */
 }
 
 void MainMenu::Uninitialise()
 {
-    RunGame = false;
+
     delete inputManager;
     delete m_visualisation;
     SDL_DestroyRenderer(gameRender);

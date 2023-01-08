@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
 		//Mmenu->Uninitialise();
 	}
 
-	Mmenu->Uninitialise();
+	//Mmenu->Uninitialise();
 
 	Game* game = Game::Instance();
 
